@@ -6,17 +6,16 @@
   <title>Discord Market Sentiment Dashboard</title>
   <style>
     :root {
-      --bg: #0a0f1d;
-      --bg2: #0f1730;
-      --panel: #131d38;
-      --line: #2a3a60;
-      --text: #e9eef9;
-      --muted: #97a5c6;
-      --green: #38d39f;
+      --bg: #0b1020;
+      --bg2: #111935;
+      --card: #141f3d;
+      --line: #2b3b67;
+      --text: #eaf0fb;
+      --muted: #98a6c8;
+      --green: #39d98a;
       --red: #ff6b6b;
-      --yellow: #f5c65b;
-      --blue: #63a8ff;
-      --purple: #9c7dff;
+      --yellow: #f7c65f;
+      --blue: #62a8ff;
       --shadow: 0 18px 40px rgba(0,0,0,.28);
       --radius: 18px;
     }
@@ -27,13 +26,11 @@
       color: var(--text);
       background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
     }
-    .wrap { max-width: 1500px; margin: 0 auto; padding: 28px; }
-    .header {
-      display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 22px;
-    }
+    .wrap { max-width: 1520px; margin: 0 auto; padding: 28px; }
+    .header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 22px; }
     .title { margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
     .subtitle { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
-    .updated { margin-top: 10px; font-size: 13px; color: var(--text); font-weight: 600; }
+    .updated { margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--text); }
     .badge {
       padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line);
       background: rgba(255,255,255,.03); color: var(--muted); font-size: 12px; white-space: nowrap;
@@ -41,34 +38,34 @@
     .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
     .card {
       background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.015));
-      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 18px 40px rgba(0,0,0,.28); overflow: hidden;
     }
-    .summary {
-      grid-column: span 3; padding: 18px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between;
-    }
+    .summary { grid-column: span 3; padding: 18px; min-height: 136px; display: flex; flex-direction: column; justify-content: space-between; }
     .label { color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
-    .value { margin-top: 10px; font-size: 29px; font-weight: 800; line-height: 1.05; }
+    .value { margin-top: 10px; font-size: 28px; font-weight: 800; line-height: 1.05; }
     .hint { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.45; }
     .green { color: var(--green); } .red { color: var(--red); } .yellow { color: var(--yellow); } .blue { color: var(--blue); }
     .section { grid-column: span 12; }
     .section-head {
-      padding: 18px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 18px 20px; border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
     }
     .section-title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
     .section-note { color: var(--muted); font-size: 12px; }
     table { width: 100%; border-collapse: collapse; }
     th, td {
-      padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,.05);
-      font-size: 14px; line-height: 1.45;
+      padding: 14px 16px; text-align: left; vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,.05); font-size: 14px; line-height: 1.45;
     }
     th {
-      background: rgba(255,255,255,.02); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-size: 12px;
+      background: rgba(255,255,255,.02); color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em; font-size: 12px;
     }
     tr:hover td { background: rgba(255,255,255,.02); }
     .ticker { font-weight: 800; letter-spacing: .01em; }
     .pill {
-      display: inline-block; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line);
-      background: rgba(255,255,255,.03); font-size: 12px; white-space: nowrap;
+      display: inline-block; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.03); font-size: 12px; white-space: nowrap;
     }
     .half { grid-column: span 6; padding: 18px 20px; }
     .half h3 { margin: 0 0 12px; font-size: 18px; letter-spacing: -.02em; }
@@ -79,13 +76,15 @@
     ul.clean { margin: 0; padding-left: 18px; }
     ul.clean li { margin: 10px 0; line-height: 1.6; }
     .bottom {
-      grid-column: span 12; padding: 22px 24px; background: linear-gradient(180deg, rgba(99,168,255,.08), rgba(156,125,255,.06));
-      border: 1px solid rgba(99,168,255,.18);
+      grid-column: span 12; padding: 22px 24px;
+      background: linear-gradient(180deg, rgba(98,168,255,.08), rgba(98,168,255,.03));
+      border: 1px solid rgba(98,168,255,.18);
     }
-    .bottom p { margin: 0; color: #dbe6ff; font-size: 15px; line-height: 1.7; }
+    .bottom p { margin: 0; color: #dce7ff; font-size: 15px; line-height: 1.7; }
     @media (max-width: 1100px) { .summary { grid-column: span 6; } .half { grid-column: span 12; } }
     @media (max-width: 760px) {
-      .wrap { padding: 18px; } .summary { grid-column: span 12; } .header { flex-direction: column; align-items: flex-start; }
+      .wrap { padding: 18px; } .summary { grid-column: span 12; }
+      .header { flex-direction: column; align-items: flex-start; }
       .title { font-size: 27px; } th, td { padding: 12px 10px; }
     }
   </style>
@@ -96,7 +95,7 @@
       <div>
         <h1 class="title">Discord Market Sentiment Dashboard</h1>
         <p class="subtitle">Discord-derived sentiment, levels, and options setups</p>
-        <div class="updated">Last Updated: Sunday, April 19th, 2026 — 8:27 PM (America/New_York)</div>
+        <div class="updated">Last Updated: Friday, April 24th, 2026 — 1:46 PM (America/New_York)</div>
       </div>
       <div class="badge">Equities-first • concise high-signal extraction</div>
     </div>
@@ -104,50 +103,45 @@
     <div class="grid">
       <div class="card summary">
         <div class="label">Primary Mood</div>
-        <div class="value yellow">Bullish but Conditional</div>
-        <div class="hint">Risk appetite improved with BTC strength and Iran ceasefire headlines, but conviction still depends on oil staying contained and key levels holding.</div>
+        <div class="value yellow">Yield-Harvest, Trend-Aware</div>
+        <div class="hint">The dominant posture is disciplined covered-call harvesting, with strong emphasis on resistance-based entries, rolling discipline, and avoiding getting trapped by upside reversals.</div>
       </div>
       <div class="card summary">
         <div class="label">Best Equity Level</div>
-        <div class="value green">TSLA $350</div>
-        <div class="hint">Most repeated high-conviction equity buy/support zone in the latest file, with $300-$315 as the deeper add zone and $360 flagged as a local floor.</div>
+        <div class="value green">IBIT $40.50</div>
+        <div class="hint">Most repeated clean trade level in the current file: the community repeatedly cites 40.50 as the key resistance anchor for weekly BTC-linked call selling.</div>
       </div>
       <div class="card summary">
         <div class="label">Most Discussed Ticker</div>
-        <div class="value blue">MSTR</div>
-        <div class="hint">Dominates the latest discussion across price levels, ATM mechanics, BTC sensitivity, preferred shares, and options positioning.</div>
+        <div class="value blue">TSLA</div>
+        <div class="hint">Still the anchor ticker across CCs, PMCCs, LEAPS, puts, rolling, trend-break analysis, and strike-selection debate.</div>
       </div>
       <div class="card summary">
         <div class="label">Most Important Macro Trigger</div>
-        <div class="value red">Oil & BTC &gt; / &lt; Key Levels</div>
-        <div class="hint">Oil above or below $100 and BTC reclaiming / holding the mid-70k range are the main regime switches driving MSTR and broader risk sentiment.</div>
+        <div class="value red">BTC Trend / Vol Regime</div>
+        <div class="hint">Bitcoin direction and volatility are the main macro switch for IBIT, FBTC, and MSTR setups, especially when deciding between weeklies, longer DTE, or standing down.</div>
       </div>
 
       <div class="card section">
         <div class="section-head">
           <h2 class="section-title">Top Tickers</h2>
-          <div class="section-note">Ranked by repeated discussion density and signal quality in the latest file</div>
+          <div class="section-note">Ranked by frequency and usefulness of trade detail</div>
         </div>
         <table>
           <thead>
-            <tr>
-              <th>Ticker</th>
-              <th>Mentions</th>
-              <th>Bias</th>
-              <th>Conviction</th>
-            </tr>
+            <tr><th>Ticker</th><th>Mentions</th><th>Bias</th><th>Conviction</th></tr>
           </thead>
           <tbody>
-            <tr><td class="ticker">MSTR</td><td>Very High</td><td><span class="pill">Bullish long-term, highly macro-sensitive</span></td><td>High</td></tr>
-            <tr><td class="ticker">TSLA</td><td>High</td><td><span class="pill">Bullish long-term, wait-for-levels near-term</span></td><td>High</td></tr>
-            <tr><td class="ticker">STRC</td><td>High</td><td><span class="pill">Bullish as yield / cash-alternative vehicle</span></td><td>High</td></tr>
-            <tr><td class="ticker">BTC</td><td>High</td><td><span class="pill">Constructive near-term, still level-dependent</span></td><td>High</td></tr>
-            <tr><td class="ticker">IBIT</td><td>Medium</td><td><span class="pill">Neutral-bullish, income-focused</span></td><td>Medium</td></tr>
-            <tr><td class="ticker">SATS</td><td>Medium</td><td><span class="pill">Speculative with CC-on-strength bias</span></td><td>Medium</td></tr>
-            <tr><td class="ticker">MU</td><td>Low-Medium</td><td><span class="pill">Strong secular bullishness</span></td><td>Medium</td></tr>
-            <tr><td class="ticker">WMT</td><td>Low</td><td><span class="pill">Clean technical setup</span></td><td>Low-Medium</td></tr>
-            <tr><td class="ticker">PANW</td><td>Low</td><td><span class="pill">Watchlist quality question</span></td><td>Low</td></tr>
-            <tr><td class="ticker">EOSE</td><td>Low</td><td><span class="pill">Starter CC candidate</span></td><td>Low-Medium</td></tr>
+            <tr><td class="ticker">TSLA</td><td>Very High</td><td><span class="pill">Bullish long-term, tactical caution near trend breaks</span></td><td>High</td></tr>
+            <tr><td class="ticker">IBIT</td><td>High</td><td><span class="pill">Neutral-bullish, preferred BTC income vehicle</span></td><td>High</td></tr>
+            <tr><td class="ticker">ALAB</td><td>High</td><td><span class="pill">Repair trade / PMCC income setup</span></td><td>Medium-High</td></tr>
+            <tr><td class="ticker">MRVL</td><td>High</td><td><span class="pill">Range-bound premium seller with roll flexibility</span></td><td>Medium-High</td></tr>
+            <tr><td class="ticker">MSTR</td><td>Medium-High</td><td><span class="pill">Bullish but very volatile / assignment-friendly</span></td><td>Medium-High</td></tr>
+            <tr><td class="ticker">PLTR</td><td>Medium</td><td><span class="pill">Hold-plus-income overlay</span></td><td>Medium</td></tr>
+            <tr><td class="ticker">FBTC</td><td>Medium</td><td><span class="pill">Usable but inferior chain to IBIT</span></td><td>Medium</td></tr>
+            <tr><td class="ticker">EOSE</td><td>Medium</td><td><span class="pill">Starter CC candidate</span></td><td>Medium</td></tr>
+            <tr><td class="ticker">SATS</td><td>Medium</td><td><span class="pill">Speculative CC-on-strength candidate</span></td><td>Medium</td></tr>
+            <tr><td class="ticker">AVGO</td><td>Low-Medium</td><td><span class="pill">Roll-management / put example</span></td><td>Low-Medium</td></tr>
           </tbody>
         </table>
       </div>
@@ -155,74 +149,68 @@
       <div class="card section">
         <div class="section-head">
           <h2 class="section-title">Key Levels</h2>
-          <div class="section-note">Equities first; crypto-linked levels included only where central to equity discussion</div>
+          <div class="section-note">Equities first, then crypto-linked instruments where levels directly drive equity options behavior</div>
         </div>
         <table>
           <thead>
-            <tr>
-              <th>Ticker</th>
-              <th>Support</th>
-              <th>Resistance</th>
-              <th>Trigger</th>
-              <th>Meaning</th>
-            </tr>
+            <tr><th>Ticker</th><th>Support</th><th>Resistance</th><th>Trigger</th><th>Meaning</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td class="ticker">MSTR</td>
-              <td>$120, $116, $104-$100, sub-$100 / just under $90</td>
-              <td>$130, $140-$150, $160-$173, modelled $460 at 1.5x mNAV</td>
-              <td>BTC holding/reclaiming $71k-$76k and oil staying under $100 improve the setup</td>
-              <td>$120 and $100 remain the key value zones; recent discussion turned more constructive as MSTR reclaimed $130-$150.</td>
-            </tr>
-            <tr>
               <td class="ticker">TSLA</td>
-              <td>$360, $350, $328, $300-$315, $291</td>
-              <td>Not specified near-term; long-term targets discussed at $600, $2000, $2600+</td>
-              <td>Do not sell calls at bottoms; $350 expected to hold unless macro/geopolitics deteriorate badly</td>
-              <td>$350 is the major tactical support; $300-$315 is the deeper high-conviction add zone.</td>
-            </tr>
-            <tr>
-              <td class="ticker">STRC</td>
-              <td>$99.21-$99.89, post-div dips below $100</td>
-              <td>$100.00 and above</td>
-              <td>Staying near par supports confidence in the funding / BTC-accretion flywheel</td>
-              <td>Treated as a yield-bearing parking spot where price stability matters more than trading upside.</td>
-            </tr>
-            <tr>
-              <td class="ticker">BTC</td>
-              <td>$67.8k, $66k, $55-$58k</td>
-              <td>$71k, $73-$74k, $76k, then $90-$100k corrective upside zone</td>
-              <td>$76k claimed = stronger upside case; losing upper-60k region weakens structure</td>
-              <td>BTC level structure is the main driver for MSTR sentiment and many equity-linked risk calls.</td>
+              <td>$382, $375-$380, $361, $355/$350, $300</td>
+              <td>$390-$400, $405, $410-$425, $430-$455</td>
+              <td>Break below $382 or confirm trend break = more defensive posture; green days and resistance remain preferred CC entry windows</td>
+              <td>TSLA is a premium engine, but the crowd is careful about selling calls into weakness or close to local bottoms.</td>
             </tr>
             <tr>
               <td class="ticker">IBIT</td>
-              <td>Not specified in latest slice</td>
-              <td>Not specified in latest slice</td>
-              <td>Used mostly as a covered-call income expression of BTC views</td>
-              <td>Still relevant, but less central than MSTR/STRC/BTC in this latest file.</td>
+              <td>$39, $39.50, $40</td>
+              <td>$40.50, $41, $42, $43.50</td>
+              <td>BTC chop/downtrend favors weeklies; BTC upside re-acceleration raises roll and assignment stress</td>
+              <td>$40.50 is the clearest repeated resistance and the main weekly income anchor.</td>
+            </tr>
+            <tr>
+              <td class="ticker">ALAB</td>
+              <td>Economic BE context around low-$130s after repair; prior assignment context around low/mid-$140s</td>
+              <td>$122, $125, $129, $135, $155</td>
+              <td>Used for aggressive break-even reduction after assignment or PMCC exposure</td>
+              <td>ALAB is mostly an active-management problem, not a clean long-only conviction trade.</td>
+            </tr>
+            <tr>
+              <td class="ticker">MRVL</td>
+              <td>$83, $87-$93 range</td>
+              <td>$90, $95, $100, $105</td>
+              <td>Range structure and extrinsic value drive decisions more than raw spot vs strike</td>
+              <td>MRVL is the clearest case study for patient credit rolls and not confusing ITM status with immediate danger.</td>
+            </tr>
+            <tr>
+              <td class="ticker">MSTR</td>
+              <td>&lt;$105, $100, fib support near $122</td>
+              <td>$120-$180 discussed CC range; $140/$155/$165 active stress zones</td>
+              <td>BTC trend is the main switch; some participants only want re-entry below $100</td>
+              <td>MSTR offers huge premium but becomes much harder to manage when BTC goes vertical.</td>
+            </tr>
+            <tr>
+              <td class="ticker">PLTR</td>
+              <td>Not specified</td>
+              <td>$142, $145</td>
+              <td>Assignment tolerance drives strike choice</td>
+              <td>Mostly treated as a steady hold-plus-income name.</td>
+            </tr>
+            <tr>
+              <td class="ticker">EOSE</td>
+              <td>Not specified</td>
+              <td>$7, $8</td>
+              <td>Used as a starter CC name because it is cheaper and volatile enough to learn on</td>
+              <td>Simple training-wheel covered-call ticker.</td>
             </tr>
             <tr>
               <td class="ticker">SATS</td>
-              <td>Sub-$100 preferred add zone</td>
-              <td>SpaceX top / hype spikes used as CC sell zones</td>
-              <td>Exit or sell large covered calls if SpaceX tops out</td>
-              <td>Speculative satellite/space proxy where monetizing spikes is preferred to blind holding.</td>
-            </tr>
-            <tr>
-              <td class="ticker">WMT</td>
-              <td>$118</td>
-              <td>$131-$132</td>
-              <td>Trend line + mean reversion setup</td>
-              <td>One of the cleaner non-core equity technical setups mentioned.</td>
-            </tr>
-            <tr>
-              <td class="ticker">PANW</td>
-              <td>$139.57 recent low</td>
-              <td>$155 area discussed</td>
-              <td>Question was whether fundamentals still justify re-entry</td>
-              <td>Mentioned as a possible cybersecurity re-entry, but with low conviction and open questions.</td>
+              <td>Not specified</td>
+              <td>$140, $155, possible $200/$220 scenario</td>
+              <td>Sell calls into hype spikes and space-theme strength</td>
+              <td>Speculative upside is acknowledged, but the preferred action is monetizing sharp moves rather than chasing them.</td>
             </tr>
           </tbody>
         </table>
@@ -235,55 +223,72 @@
         </div>
         <table>
           <thead>
-            <tr>
-              <th>Ticker</th>
-              <th>Strategy</th>
-              <th>Strikes</th>
-              <th>Expiry</th>
-              <th>Buy / Sell</th>
-              <th>Rationale</th>
-            </tr>
+            <tr><th>Ticker</th><th>Strategy</th><th>Strikes</th><th>Expiry</th><th>Buy / Sell</th><th>Rationale</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td class="ticker">MSTR</td>
-              <td>LEAPS, covered calls, protective / income hedging</td>
-              <td>$150 calls, covered-call strike $215, add zone around $125-$133</td>
-              <td>June 2028, Friday expiry for CC example</td>
-              <td>Buy calls, sell calls, hedge with calls</td>
-              <td>Core thesis is long-term BTC upside with tactical monetization of spikes; recent strength encouraged LEAPS buyers and call sellers.</td>
-            </tr>
-            <tr>
               <td class="ticker">TSLA</td>
-              <td>Synthetic longs / LEAPS-style structure; covered-call caution near bottoms</td>
-              <td>Sell 12/15/28 350P + buy 12/15/28 330C; also 330C outright mentioned</td>
-              <td>12/15/2028</td>
-              <td>Sell puts, buy calls; avoid selling calls near bottoms</td>
-              <td>IA-style setup aims to gain long exposure with defined break-even while waiting for larger upside themes like Cybercab/Optimus.</td>
-            </tr>
-            <tr>
-              <td class="ticker">SATS</td>
-              <td>Covered calls on strength / hype</td>
-              <td>Not specified in latest slice</td>
-              <td>Not specified</td>
-              <td>Sell calls</td>
-              <td>Plan is to sell large covered calls if SpaceX tops out or hype runs too far too fast.</td>
+              <td>Covered calls, occasional puts, LEAPS / PMCC discussion</td>
+              <td>$370, $372.50, $380, $385, $387.5, $390, $395, $400, $405, $410, $412.5, $417.5, $420, $425, $430, $435, $440, $450, $455; puts at $355/$350/$340/$335</td>
+              <td>3/13, 3/16, 3/27, 3/30, 4/2, 4/6, 4/17, 5/15, 5/22, 37-45 DTE, Dec 2027 / Dec 2028 LEAPS discussion</td>
+              <td>Mostly sell calls; some sell puts; LEAPS used for long exposure or PMCC structures</td>
+              <td>Consensus process is sell into green days / resistance, use 30-45 DTE with 50% buybacks or weeklies with 80-95% capture, and avoid selling calls at perceived bottoms.</td>
             </tr>
             <tr>
               <td class="ticker">IBIT</td>
-              <td>Covered-call income vehicle</td>
-              <td>Not specified in latest slice</td>
-              <td>Not specified</td>
-              <td>Sell calls</td>
-              <td>Referenced mainly as an alternative BTC expression versus MSTR, especially for simpler premium collection.</td>
+              <td>Laddered weekly / short-dated covered calls</td>
+              <td>$39, $39.50, $40, $40.50, $41, $42, $43.50</td>
+              <td>Monday, Wednesday, Thursday, Friday weekly, 7-9 DTE, 14 DTE, 3/16</td>
+              <td>Sell calls; rare long-IV/call ideas mentioned</td>
+              <td>Most systematic income setup in the file. Multiple strikes and expiries reduce roll stress and assignment risk when BTC spikes.</td>
             </tr>
             <tr>
-              <td class="ticker">STRC</td>
-              <td>Yield capture / carry trade rather than options</td>
-              <td>Not specified</td>
-              <td>Monthly dividend cadence</td>
-              <td>Buy shares</td>
-              <td>Used as a yield-bearing capital parking spot and, for some, a leverage/carry spread idea against credit lines or margin.</td>
+              <td class="ticker">ALAB</td>
+              <td>PMCC, short puts, short-dated covered calls for BE repair</td>
+              <td>$125, $129, $135, $155</td>
+              <td>1 DTE, weekly, 4/24, 5/8</td>
+              <td>Sell calls; earlier sell puts used for entry</td>
+              <td>ALAB is the clearest example of active break-even repair: assignment or long-call exposure first, then repeated CC sales to lower economic basis.</td>
+            </tr>
+            <tr>
+              <td class="ticker">MRVL</td>
+              <td>Covered calls / PMCC with credit rolls</td>
+              <td>$85, $90, $95, $100, $105, $140</td>
+              <td>3/20, 4/17, 5/1, 5/15, 6/18, 7/17</td>
+              <td>Sell calls; roll up/out for credit when needed</td>
+              <td>The key lesson is that extrinsic value matters: traders lean on time value and patient rolls instead of panicking when spot moves through strike.</td>
+            </tr>
+            <tr>
+              <td class="ticker">MSTR</td>
+              <td>Weekly CCs, LEAPS interest, assignment-friendly premium harvesting</td>
+              <td>Broadly $120-$180; stress zones around $140/$155/$165; leap interest under $105/$100</td>
+              <td>Weekly, 4/17, Dec 2028 mentioned</td>
+              <td>Sell calls; selectively buy LEAPS on deeper dips</td>
+              <td>Used as a high-premium engine. Several traders are fine with assignment above basis; others wait for sub-$100 before rebuilding long exposure.</td>
+            </tr>
+            <tr>
+              <td class="ticker">PLTR</td>
+              <td>Buy-write / covered calls</td>
+              <td>$142, $145</td>
+              <td>Friday weekly, 3/27, 30-45 DTE</td>
+              <td>Sell calls</td>
+              <td>Simple long-hold income overlay where assignment is acceptable if the strike is above basis.</td>
+            </tr>
+            <tr>
+              <td class="ticker">FBTC</td>
+              <td>Covered calls, but chain quality criticized</td>
+              <td>$61.5, $62.5, $63, $64</td>
+              <td>Weekly, 5/15</td>
+              <td>Sell calls</td>
+              <td>Still used, but IBIT is repeatedly preferred because strikes and liquidity are cleaner for rolling and management.</td>
+            </tr>
+            <tr>
+              <td class="ticker">EOSE</td>
+              <td>Starter covered-call / biweekly income</td>
+              <td>$7, $8</td>
+              <td>Biweekly, 4/24, 5/15</td>
+              <td>Sell calls</td>
+              <td>Recommended as a lower-priced name to learn on while still generating meaningful premium.</td>
             </tr>
           </tbody>
         </table>
@@ -292,40 +297,40 @@
       <div class="card half">
         <h3>Tickers to Watch</h3>
         <div class="watch-item">
-          <div class="watch-top"><span class="ticker">MSTR</span><span class="pill">Highest signal</span></div>
-          <div class="reason">The clearest focus in the file. Discussion spans valuation, BTC sensitivity, preferred-share funding, LEAPS, CCs, and tactical price zones.</div>
+          <div class="watch-top"><span class="ticker">TSLA</span><span class="pill">Primary focus</span></div>
+          <div class="reason">The densest mix of strategy, levels, and live execution. It remains the benchmark name for strike selection, DTE choice, and not capping upside too early.</div>
         </div>
         <div class="watch-item">
-          <div class="watch-top"><span class="ticker">TSLA</span><span class="pill">Major equity level</span></div>
-          <div class="reason">Still a core long-term conviction name, but the current conversation is all about waiting for levels and not capping upside by selling calls at local bottoms.</div>
+          <div class="watch-top"><span class="ticker">IBIT</span><span class="pill">Income benchmark</span></div>
+          <div class="reason">The cleanest repeatable CC process. Laddered strikes around $39.50-$40.50 remain the community template for systematic BTC-linked premium selling.</div>
         </div>
         <div class="watch-item">
-          <div class="watch-top"><span class="ticker">STRC</span><span class="pill">Flywheel signal</span></div>
-          <div class="reason">Price stability around par is being treated as evidence that the Strategy funding machine is working better than skeptics expected.</div>
+          <div class="watch-top"><span class="ticker">ALAB</span><span class="pill">Repair-trade case study</span></div>
+          <div class="reason">Useful because it shows how traders handle assignment, PMCC risk, break-even reduction, and short-dated call overlays under pressure.</div>
         </div>
         <div class="watch-item">
-          <div class="watch-top"><span class="ticker">BTC</span><span class="pill">Macro driver</span></div>
-          <div class="reason">BTC reclaiming and holding mid-70k levels is the key swing factor for MSTR, risk appetite, and whether current bullish positioning survives.</div>
+          <div class="watch-top"><span class="ticker">MRVL</span><span class="pill">Roll-management example</span></div>
+          <div class="reason">The best live example of why extrinsic value matters and why patient credit rolls can outperform emotional early exits.</div>
         </div>
         <div class="watch-item">
-          <div class="watch-top"><span class="ticker">SATS</span><span class="pill">Speculative monetization</span></div>
-          <div class="reason">Interesting because traders are explicitly thinking about monetizing SpaceX-adjacent hype with covered calls rather than just holding through spikes.</div>
+          <div class="watch-top"><span class="ticker">MSTR</span><span class="pill">Volatility engine</span></div>
+          <div class="reason">Important because it offers huge premium but also shows how dangerous upside explosions can be when BTC turns sharply higher.</div>
         </div>
       </div>
 
       <div class="card half">
         <h3>Top Narratives</h3>
         <ul class="clean">
-          <li>MSTR has overtaken TSLA as the center of gravity in the latest discussion, with the crowd debating whether the funding flywheel is elegant financial engineering or a fragile structure.</li>
-          <li>STRC is increasingly viewed as a serious yield-bearing cash alternative, with far more focus on dividend stability and recovery-to-par speed than on short-term price moves.</li>
-          <li>TSLA sentiment remains strongly bullish long-term, but traders are focused on layering entries near $350 or lower and explicitly avoiding covered-call sales at local bottoms.</li>
-          <li>Oil under $100 and BTC above the mid-70k range are the main macro confirmation signals for more aggressive long exposure.</li>
-          <li>The strongest tactical behavior is still selling calls into strength, using LEAPS/synthetics for long-duration upside, and keeping dry powder for deeper pullbacks.</li>
+          <li>Covered-call execution dominates, but the crowd is split between weeklies with 85-95% capture and 30-45 DTE structures with 50% auto-buybacks.</li>
+          <li>Strike selection is increasingly TA-driven rather than purely delta-driven: resistance, mean reversion, and trend are the recurring filters.</li>
+          <li>IBIT has emerged as the preferred crypto-linked income vehicle over FBTC because the chain is cleaner, strikes are denser, and rolling is easier.</li>
+          <li>TSLA remains the emotional center of the group: everyone wants the premium, but many have learned not to sell calls at bottoms or into violent upside reversals.</li>
+          <li>Risk management is the real edge: laddering strikes, accepting assignment when profitable, and avoiding panic rolls are the repeated lessons.</li>
         </ul>
       </div>
 
       <div class="card bottom">
-        <p><strong>Bottom Line:</strong> The latest Discord flow is centered on MSTR, STRC, TSLA, and BTC. MSTR is the clear lead ticker, with traders leaning bullish but still treating oil and BTC levels as hard gates. TSLA remains a major long-term conviction equity, but the current consensus is to wait for stronger entry zones and avoid capping upside too early. STRC is increasingly being accepted as a yield-bearing cash alternative and as proof that the broader Strategy flywheel is functioning.</p>
+        <p><strong>Bottom Line:</strong> The current Discord flow is overwhelmingly about monetizing volatility through covered calls, with TSLA as the anchor ticker and IBIT as the cleanest repeatable income setup. ALAB and MRVL stand out as case studies in active management and credit rolling, while MSTR remains the high-octane premium engine that can punish poor timing. The strongest shared edge is process: sell into resistance, know your assignment tolerance, ladder your exposure, and let time decay do the work.</p>
       </div>
     </div>
   </div>
