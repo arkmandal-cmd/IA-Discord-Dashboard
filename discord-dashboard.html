@@ -38,7 +38,7 @@
     .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
     .card {
       background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.015));
-      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 18px 40px rgba(0,0,0,.28); overflow: hidden;
+      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
     }
     .summary { grid-column: span 3; padding: 18px; min-height: 136px; display: flex; flex-direction: column; justify-content: space-between; }
     .label { color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
@@ -95,7 +95,7 @@
       <div>
         <h1 class="title">Discord Market Sentiment Dashboard</h1>
         <p class="subtitle">Discord-derived sentiment, levels, and options setups</p>
-        <div class="updated">Last Updated: Friday, April 24th, 2026 — 1:46 PM (America/New_York)</div>
+        <div class="updated">Last Updated: Monday, April 27th, 2026 — 6:00 PM (America/New_York)</div>
       </div>
       <div class="badge">Equities-first • concise high-signal extraction</div>
     </div>
@@ -103,45 +103,45 @@
     <div class="grid">
       <div class="card summary">
         <div class="label">Primary Mood</div>
-        <div class="value yellow">Yield-Harvest, Trend-Aware</div>
-        <div class="hint">The dominant posture is disciplined covered-call harvesting, with strong emphasis on resistance-based entries, rolling discipline, and avoiding getting trapped by upside reversals.</div>
+        <div class="value yellow">Systematic Income, Selective Risk</div>
+        <div class="hint">The discussion is dominated by disciplined covered-call harvesting, with traders favoring repeatable process over prediction and emphasizing risk control over max premium.</div>
       </div>
       <div class="card summary">
         <div class="label">Best Equity Level</div>
         <div class="value green">IBIT $40.50</div>
-        <div class="hint">Most repeated clean trade level in the current file: the community repeatedly cites 40.50 as the key resistance anchor for weekly BTC-linked call selling.</div>
+        <div class="hint">Most repeated clean trade level in the file: traders consistently cite 40.50 as the key resistance anchor for weekly BTC-linked call selling.</div>
       </div>
       <div class="card summary">
         <div class="label">Most Discussed Ticker</div>
         <div class="value blue">TSLA</div>
-        <div class="hint">Still the anchor ticker across CCs, PMCCs, LEAPS, puts, rolling, trend-break analysis, and strike-selection debate.</div>
+        <div class="hint">Still the anchor name across covered calls, PMCCs, LEAPS, puts, trend-break analysis, strike selection, and rolling behavior.</div>
       </div>
       <div class="card summary">
         <div class="label">Most Important Macro Trigger</div>
-        <div class="value red">BTC Trend / Vol Regime</div>
-        <div class="hint">Bitcoin direction and volatility are the main macro switch for IBIT, FBTC, and MSTR setups, especially when deciding between weeklies, longer DTE, or standing down.</div>
+        <div class="value red">BTC Direction</div>
+        <div class="hint">Bitcoin trend and volatility are the main macro regime switch for IBIT, FBTC, and MSTR setups, especially when deciding between weeklies, longer DTE, or stepping aside.</div>
       </div>
 
       <div class="card section">
         <div class="section-head">
           <h2 class="section-title">Top Tickers</h2>
-          <div class="section-note">Ranked by frequency and usefulness of trade detail</div>
+          <div class="section-note">Ranked by frequency and actionable detail in the discussion</div>
         </div>
         <table>
           <thead>
             <tr><th>Ticker</th><th>Mentions</th><th>Bias</th><th>Conviction</th></tr>
           </thead>
           <tbody>
-            <tr><td class="ticker">TSLA</td><td>Very High</td><td><span class="pill">Bullish long-term, tactical caution near trend breaks</span></td><td>High</td></tr>
+            <tr><td class="ticker">TSLA</td><td>Very High</td><td><span class="pill">Bullish long-term, tactical caution near weakness</span></td><td>High</td></tr>
             <tr><td class="ticker">IBIT</td><td>High</td><td><span class="pill">Neutral-bullish, preferred BTC income vehicle</span></td><td>High</td></tr>
             <tr><td class="ticker">ALAB</td><td>High</td><td><span class="pill">Repair trade / PMCC income setup</span></td><td>Medium-High</td></tr>
             <tr><td class="ticker">MRVL</td><td>High</td><td><span class="pill">Range-bound premium seller with roll flexibility</span></td><td>Medium-High</td></tr>
-            <tr><td class="ticker">MSTR</td><td>Medium-High</td><td><span class="pill">Bullish but very volatile / assignment-friendly</span></td><td>Medium-High</td></tr>
+            <tr><td class="ticker">MSTR</td><td>Medium-High</td><td><span class="pill">Bullish but high-volatility / assignment-friendly</span></td><td>Medium-High</td></tr>
             <tr><td class="ticker">PLTR</td><td>Medium</td><td><span class="pill">Hold-plus-income overlay</span></td><td>Medium</td></tr>
-            <tr><td class="ticker">FBTC</td><td>Medium</td><td><span class="pill">Usable but inferior chain to IBIT</span></td><td>Medium</td></tr>
+            <tr><td class="ticker">FBTC</td><td>Medium</td><td><span class="pill">Usable but less preferred than IBIT</span></td><td>Medium</td></tr>
             <tr><td class="ticker">EOSE</td><td>Medium</td><td><span class="pill">Starter CC candidate</span></td><td>Medium</td></tr>
             <tr><td class="ticker">SATS</td><td>Medium</td><td><span class="pill">Speculative CC-on-strength candidate</span></td><td>Medium</td></tr>
-            <tr><td class="ticker">AVGO</td><td>Low-Medium</td><td><span class="pill">Roll-management / put example</span></td><td>Low-Medium</td></tr>
+            <tr><td class="ticker">AVGO</td><td>Low-Medium</td><td><span class="pill">Put / roll-management example</span></td><td>Low-Medium</td></tr>
           </tbody>
         </table>
       </div>
@@ -160,14 +160,14 @@
               <td class="ticker">TSLA</td>
               <td>$382, $375-$380, $361, $355/$350, $300</td>
               <td>$390-$400, $405, $410-$425, $430-$455</td>
-              <td>Break below $382 or confirm trend break = more defensive posture; green days and resistance remain preferred CC entry windows</td>
-              <td>TSLA is a premium engine, but the crowd is careful about selling calls into weakness or close to local bottoms.</td>
+              <td>Lose $382 or confirm trend weakness and traders get more defensive; green days and resistance remain preferred CC windows</td>
+              <td>TSLA is still the main premium engine, but the group is careful about selling calls into weakness or too close to local bottoms.</td>
             </tr>
             <tr>
               <td class="ticker">IBIT</td>
               <td>$39, $39.50, $40</td>
               <td>$40.50, $41, $42, $43.50</td>
-              <td>BTC chop/downtrend favors weeklies; BTC upside re-acceleration raises roll and assignment stress</td>
+              <td>BTC chop/downtrend favors weeklies; BTC upside acceleration quickly raises roll and assignment stress</td>
               <td>$40.50 is the clearest repeated resistance and the main weekly income anchor.</td>
             </tr>
             <tr>
@@ -188,7 +188,7 @@
               <td class="ticker">MSTR</td>
               <td>&lt;$105, $100, fib support near $122</td>
               <td>$120-$180 discussed CC range; $140/$155/$165 active stress zones</td>
-              <td>BTC trend is the main switch; some participants only want re-entry below $100</td>
+              <td>BTC trend is the main switch; several participants only want re-entry below $100</td>
               <td>MSTR offers huge premium but becomes much harder to manage when BTC goes vertical.</td>
             </tr>
             <tr>
